@@ -1,0 +1,1 @@
+# WPSP_SPJ_KonstrukcijskiZadatak
