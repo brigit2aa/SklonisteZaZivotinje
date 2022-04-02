@@ -1,0 +1,44 @@
+.container-prijava
+{
+    display: flex;
+   
+}
+
+.form-group{
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+}
+
+.dobroDosli
+{
+    text-align: center;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    width: 30%;
+    margin-top: 10%;
+    border: 1px solid rgba(255, 255, 255, 0.959);  
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0 2px white,
+                0 0 20px rgba(21, 27, 43, 0.842), 
+                0 0 5px rgb(175, 175, 175),
+                0 0 6px rgba(179, 179, 179, 0.932),
+                0 0 35px rgb(185, 185, 185);
+}
+
+button
+{
+    width: 100%;
+    height: 30px;
+    background-image: url('../images/gumbi.bmp');
+}
+
+.lozinka
+{
+    margin-left: 50px;
+}
+
