@@ -1,8 +1,7 @@
 import { Button } from 'react-bootstrap';
 import { Link, Route, Router, Switch } from 'react-router-dom';
 import dobroDosli from '../images/bnaslovna.png';
-import login from '../css/login.css';
-
+import '../css/login.css';
 
 function Login(props) {
 
@@ -18,11 +17,11 @@ function Login(props) {
 
       <form action="" method="">
         <div className="form-group">
-          <label>Korisničko ime: </label>
+          <label>Korisničko ime:</label>
           <input type="text" />
           <br />
           <br />
-          <label className='lozinka'>Lozinka: </label>
+          <label className='lozinka'>Lozinka:</label>
           <input type="password" />
           <br />
           <br />

@@ -1,0 +1,114 @@
+.tablica {
+    z-index: 1;
+    width: 90%;
+    height: flex;
+    margin-top: 4%;
+    box-shadow: 0 0 1px white,
+        0 0 2px rgb(27, 36, 61);
+    justify-content: center;
+    align-items: center;
+    margin-left: 5%;
+   
+}
+table {
+    color: rgb(67, 75, 94);
+    width: 100%;
+    font-size: 12px;
+    
+}
+
+.naslov {
+    color: rgb(202, 156, 96);
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    transition: .5s;
+    padding: 0.5%;
+    background-image: url('../images/boja.png');
+    display: inline-block;
+    margin-left: 22%;
+    margin-right: 41%;
+}
+
+.naslovUdomitelj
+{
+    color: rgb(202, 156, 96);
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    transition: .5s;
+    padding: 0.5%;
+    background-image: url('../images/boja.png');
+    display: inline-block;
+    margin-left: 22%;
+    margin-right: 43%;
+}
+.naslovUdomljene
+{
+    color: rgb(202, 156, 96);
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    transition: .5s;
+    padding: 0.5%;
+    background-image: url('../images/boja.png');
+    display: inline-block;
+    margin-left: 16%;
+    margin-right: 40%;
+}
+th{
+     text-transform: uppercase;
+     letter-spacing: 5px;
+     transition: .5s;
+     font-size: 12px;
+     padding: 0.5%;
+}
+
+.maca{
+    width: 3%;
+    margin-top: 1%;
+    margin-bottom: -4.7%;
+    margin-left: 85%;
+}
+
+.trazilicaUdomitelj
+{
+    width: 20%;
+    color: rgb(67, 75, 94);
+    margin-top: 1.5%;
+    margin-left: 1.5%;
+}
+
+.trazilicaUdomljene
+{
+    width: 20%;
+    color: rgb(67, 75, 94);
+    margin-top: 1.5%;
+    margin-left: 1.5%;
+}
+.gumb
+{
+    color: rgb(202, 156, 96);
+}
+
+.dodaj
+{
+    color: rgb(202, 156, 96);
+    margin-right: 0.5%;
+}
+
+.trazilicaZivotinja
+{
+    width: 20%;
+    color: rgb(67, 75, 94);
+    margin-top: 1.5%;
+    margin-left: 1.5%;
+}
+
+
+.zaglavljeTablice
+{
+    background-image: url('../images/boja.png');
+}
+
+.spremi
+{
+    color: rgb(202, 156, 96);
+}

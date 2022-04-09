@@ -18,4 +18,4 @@ while($oRow = $oRecord->fetch(PDO::FETCH_BOTH))
     $oPoljeZivotinja[] = $oRow;
 }
 echo json_encode($oPoljeZivotinja);
-?>
+?>                                           

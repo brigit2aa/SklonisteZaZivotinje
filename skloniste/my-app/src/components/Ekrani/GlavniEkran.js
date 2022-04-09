@@ -1,14 +1,15 @@
 import React from "react";
 import OsnovniEkran from './OsnovniEkran';
 import Izbornik from './Izbornik';
-import { BrowserRouter as Router } from 'react-router-dom';
+import DesniDioEkrana from './DesniDioEkrana';
 
 function GlavniEkran() {
     return (
-        <div className="glavniEkran">
+        <div className="glavni">
+            <Izbornik />
+            <DesniDioEkrana />
+            <OsnovniEkran />
             
-                <Izbornik />
-                <OsnovniEkran />
         </div>
     );
 }
