@@ -57,8 +57,8 @@ th{
      text-transform: uppercase;
      letter-spacing: 5px;
      transition: .5s;
-     font-size: 12px;
-     padding: 0.5%;
+     font-size: 12px; 
+
 }
 
 .maca{
@@ -110,5 +110,23 @@ th{
 
 .spremi
 {
+    color: rgb(202, 156, 96); 
+    margin-left: 15px;
+}
+
+.margina
+{
+    border-top: hidden;
+}
+
+.status
+{
     color: rgb(202, 156, 96);
 }
+
+.odustani
+{
+    color: rgb(202, 156, 96); 
+    margin-left: 5px;
+}
+

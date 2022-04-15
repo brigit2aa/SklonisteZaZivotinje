@@ -8,9 +8,9 @@ class Zivotinja
 	public $starost = "";
 	public $spol = "";
 	public $vrsta = "";
-	//public $status = "";
+	public $status = "";
 	
-	function __construct($sifraZivotinje, $imeZivotinje, $pasmina, $starost, $spol, $vrsta/*, $status*/)
+	public function __construct($sifraZivotinje, $imeZivotinje, $pasmina, $starost, $spol, $vrsta, $status)
 	{
 		$this->sifraZivotinje = $sifraZivotinje;
 		$this->imeZivotinje = $imeZivotinje;
@@ -18,7 +18,7 @@ class Zivotinja
 		$this->starost = $starost;
 		$this->spol = $spol;
 		$this->vrsta = $vrsta;
-		//$this->status = $status;
+		$this->status = $status;
 	}
 }
-?>
+?>          

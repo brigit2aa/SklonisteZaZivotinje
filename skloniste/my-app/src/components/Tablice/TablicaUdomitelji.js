@@ -6,26 +6,40 @@ class TablicaUdomitelji extends Component {
     constructor() {
         super();
         this.state = {
-            udomitelji: []
+            udomitelji: [],
+            filter: ""
         }
     }
 
     dohvatiUdomitelje() {
         fetch("http://localhost/WPSP_SPJ_KonstrukcijskiZadatak/action/dohvacanjeUdomitelja.php").then(response => response.json())
-        .then(response => this.setState({udomitelji: response}))
+            .then(response => this.setState({ udomitelji: response }))
     }
 
     componentDidMount = async () => {
         this.dohvatiUdomitelje();
     }
 
+    trazilica = event => {
+        this.setState({ filter: event.target.value });
+    };
+
     render() {
+
+        const { filter, udomitelji } = this.state;
+
+        var PretraziPodatke = udomitelji.filter(udomitelj => {
+            /*return Object.keys(udomitelj).some(key => udomitelj[key].toLowerCase().includes(filter.toLowerCase())) Tražilica za po svim pojmovima u tablici*/
+            return udomitelj.ime.toLowerCase().includes(filter.toLocaleLowerCase()) || udomitelj.prezime.toLowerCase().includes(filter.toLocaleLowerCase())//Tražilica za  samo po imenu i prezimenu
+
+        });
+
         return (
             <div>
                 <div className="zaglavljeTablice">
                     <input className="trazilicaUdomitelj"
                         type="text"
-                        placeholder="Pretraži udomitelje..." />
+                        placeholder="Pretraži udomitelje..." value={filter} onChange={this.trazilica.bind(this)} />
                     <p className="naslovUdomitelj">Udomitelji</p>
                 </div>
                 <div>
@@ -41,7 +55,7 @@ class TablicaUdomitelji extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.udomitelji.map(udomitelj => {
+                            {/*this.state.udomitelji*/PretraziPodatke.map(udomitelj => {
                                 return <tr>
                                     <td>{udomitelj.sifraUdomitelja}</td>
                                     <td>{udomitelj.ime}</td>

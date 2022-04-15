@@ -22,7 +22,7 @@ try
   $sQuery = "UPDATE zivotinja SET imeZivotinje=?, pasmina=?, starost=?, spol=?, vrsta=? WHERE sifraZivotinje=?";
   $oRecord = $oConnection->prepare($sQuery);
   $oRecord->execute([$imeZivotinje, $pasmina, $starost, $spol, $vrsta, $sifraZivotinje]);
-  echo "Životinja je uspješno ažurirana.";
+  //echo "Životinja je uspješno ažurirana.";
 } 
 catch(PDOException $pe)
 {
