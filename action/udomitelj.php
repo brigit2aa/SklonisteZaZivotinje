@@ -9,7 +9,7 @@ class Udomitelj
 	public $email = "";
 	public $telMob = ""; 
 
-	function __construct($sifraUdomitelja, $ime, $prezime, $adresa, $email, $telMob)
+	public function __construct($sifraUdomitelja, $ime, $prezime, $adresa, $email, $telMob)
 	{
 		$this->sifraUdomitelja = $sifraUdomitelja;
 		$this->ime = $ime;

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Table } from 'react-bootstrap';
+import { Button, Table, Modal } from 'react-bootstrap';
 import '../css/tablica.css';
 import DeleteIcon from '@material-ui/icons/Delete';
 import UpdateIcon from '@material-ui/icons/Update';
@@ -28,6 +28,8 @@ class TablicaZivotinje extends Component {
             starostUpdate: "",
             spolUpdate: "",
             vrstaUpdate: "",
+            modal: false,
+            udomiteljiZivotinja: []
         }
     }
 
@@ -36,8 +38,14 @@ class TablicaZivotinje extends Component {
             .then(response => this.setState({ zivotinje: response }))
     }
 
+    dohvatiUdomiteljaZivotinje(sifraZivotinje) {
+        fetch("http://localhost/WPSP_SPJ_KonstrukcijskiZadatak/action/udomiteljZivotinje.php?sifraZivotinje="+sifraZivotinje).then(response => response.json())
+            .then(response => this.setState({ udomiteljiZivotinja: response }))
+    }
+
     componentDidMount = async () => {
         this.dohvatiZivotinje();
+        this.dohvatiUdomiteljaZivotinje();
     }
 
     dodajZivotinju() {
@@ -69,7 +77,7 @@ class TablicaZivotinje extends Component {
         this.dohvatiZivotinje();
     }
 
-    
+
 
     obrisiZivoinju(sifraZivotinje) {
         if (window.confirm("Želite li obrisati životinju?")) {
@@ -121,7 +129,7 @@ class TablicaZivotinje extends Component {
                     });
 
                     this.dohvatiZivotinje();
-                    
+
                 })
             })
         }
@@ -130,6 +138,13 @@ class TablicaZivotinje extends Component {
     trazilica = event => {
         this.setState({ filter: event.target.value });
     };
+
+    otvorModal = (sifraZivotinje) => {
+        this.setState({ modal: true });
+        this.dohvatiUdomiteljaZivotinje(sifraZivotinje);
+    }
+
+    zatvoriModal = () => this.setState({ modal: false });
 
     render() {
 
@@ -141,14 +156,16 @@ class TablicaZivotinje extends Component {
         const x = this.state.showHide;
 
         var FormaZaAzuriranjeZivotinja = zivotinja => {
-            
-            this.setState({ showHideUpdate: !this.state.showHideUpdate, 
+
+            this.setState({
+                showHideUpdate: !this.state.showHideUpdate,
                 sifraZivotinjeUpdate: zivotinja.sifraZivotinje,
                 imeZivotinjeUpdate: zivotinja.imeZivotinje,
                 pasminaUpdate: zivotinja.pasmina,
                 starostUpdate: zivotinja.starost,
                 spolUpdate: zivotinja.spol,
-                vrstaUpdate: zivotinja.vrsta});
+                vrstaUpdate: zivotinja.vrsta
+            });
         }
 
         const y = this.state.showHideUpdate;
@@ -179,8 +196,8 @@ class TablicaZivotinje extends Component {
                                 <th>Spol</th>
                                 <th>Vrsta</th>
                                 <th>{x || y ? 'Spremi' : 'Status'}</th>
-                                <th>{x || y? '' : 'Brisanje'}</th>
-                                <th>{x || y? '' : 'Ažuriranje'}</th>
+                                <th>{x || y ? '' : 'Brisanje'}</th>
+                                <th>{x || y ? '' : 'Ažuriranje'}</th>
                             </tr>
                             {/*Forma za dodavanje nove životinje*/}
                             <tr className="margina">
@@ -190,7 +207,7 @@ class TablicaZivotinje extends Component {
                                 <td>{x && (<input placeholder="Starost..." value={this.state.starost} onChange={(data) => { this.setState({ starost: data.target.value }) }}></input>)}</td>
                                 <td>{x && (<input placeholder="Spol..." value={this.state.spol} onChange={(data) => { this.setState({ spol: data.target.value }) }}></input>)}</td>
                                 <td>{x && (<input placeholder="Vrsta..." value={this.state.vrsta} onChange={(data) => { this.setState({ vrsta: data.target.value }) }}></input>)}</td>
-                                <td><th>{x && (<CheckCircleIcon className="spremi" onClick={() => this.dodajZivotinju()}></CheckCircleIcon>)}{x &&(<CloseIcon className="odustani" onClick={FormaZaDodavanjeZivotinja}/>)}</th></td>
+                                <td><th>{x && (<CheckCircleIcon className="spremi" onClick={() => this.dodajZivotinju()}></CheckCircleIcon>)}{x && (<CloseIcon className="odustani" onClick={FormaZaDodavanjeZivotinja} />)}</th></td>
                             </tr>
                             {/*Forma za ažuriranje životinje*/}
                             <tr className="margina">
@@ -200,7 +217,7 @@ class TablicaZivotinje extends Component {
                                 <td>{y && (<input type='text' name='ime' value={this.state.starostUpdate} onChange={(data) => { this.setState({ starostUpdate: data.target.value }) }}></input>)}</td>
                                 <td>{y && (<input type='text' name='starost' value={this.state.spolUpdate} onChange={(data) => { this.setState({ spolUpdate: data.target.value }) }}></input>)}</td>
                                 <td>{y && (<input type='text' name='vrsta' value={this.state.vrstaUpdate} onChange={(data) => { this.setState({ vrstaUpdate: data.target.value }) }}></input>)}</td>
-                                <td><th>{y && (<CheckCircleIcon className="spremi" onClick={() => this.azurirajZivotinju()}></CheckCircleIcon>)}{y &&(<CloseIcon className="odustani" onClick={FormaZaAzuriranjeZivotinja}/>)}</th></td>
+                                <td><th>{y && (<CheckCircleIcon className="spremi" onClick={() => this.azurirajZivotinju()}></CheckCircleIcon>)}{y && (<CloseIcon className="odustani" onClick={FormaZaAzuriranjeZivotinja} />)}</th></td>
                             </tr>
                         </thead>
                         <tbody>
@@ -212,7 +229,49 @@ class TablicaZivotinje extends Component {
                                     <td>{zivotinja.starost}</td>
                                     <td>{zivotinja.spol}</td>
                                     <td>{zivotinja.vrsta}</td>
-                                    <td>{zivotinja.status ? <FavoriteIcon className="status"/> : <PetsIcon className="status"/>}</td>
+                                    <td> <> <div> {zivotinja.status ?<FavoriteIcon className="status" onClick={()=>this.otvorModal(zivotinja.sifraZivotinje)}/> : <PetsIcon className="status" />}</div>  
+                                            <Modal show={this.state.modal} onHide={this.zatvoriModal}>
+                                                <Modal.Header zatvoriModal>
+                                                    <Modal.Title></Modal.Title>
+                                                </Modal.Header>
+                                                <Modal.Body>
+                                                    <div>
+                                                        <div className="zaglavljeTablice">
+                                                            <p className="naslovUdomljene">Udomitelj od životinje</p>
+                                                        </div>
+                                                        <div>
+                                                            <Table responsive="sm">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Šifra</th>
+                                                                        <th>Ime</th>
+                                                                        <th>Prezime</th>
+                                                                        <th>Adresa</th>
+                                                                        <th>E-mail</th>
+                                                                        <th>Tel/Mob</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {this.state.udomiteljiZivotinja.map(udomiteljZivotinje => {
+                                                                        return <tr>
+                                                                            <td>{udomiteljZivotinje.sifraUdomitelja}</td>
+                                                                            <td>{udomiteljZivotinje.ime}</td>
+                                                                            <td>{udomiteljZivotinje.prezime}</td>
+                                                                            <td>{udomiteljZivotinje.adresa}</td>
+                                                                            <td>{udomiteljZivotinje.email}</td>
+                                                                            <td>{udomiteljZivotinje.telMob}</td>
+                                                                        </tr>
+                                                                    })}
+                                                                </tbody>
+                                                            </Table>
+                                                        </div >
+                                                    </div>
+                                                </Modal.Body>
+                                                <Modal.Footer>
+                                                    <Button variant="light" onClick={this.zatvoriModal}>Zatvori</Button>
+                                                </Modal.Footer>
+                                            </Modal>
+                                        </></td>
                                     <td><DeleteIcon className="gumb" onClick={() => this.obrisiZivoinju(zivotinja.sifraZivotinje)}></DeleteIcon></td>
                                     <td> <UpdateIcon className="gumb" onClick={() => FormaZaAzuriranjeZivotinja(zivotinja)}></UpdateIcon></td>
                                 </tr>
