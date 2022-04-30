@@ -11,12 +11,12 @@ include_once 'connection.php';
 $data = json_decode(file_get_contents("php://input"), true);
 
 $sifraUdomljeneZivotinje = $data['sifraUdomljeneZivotinje'];
-$sifraUdomitelja = $data['sifraUdomitelja'];
+$sifraUdomitelja = $data['sifraUdomiteljaZivotinje'];
 ////////////
  
 try
 {
-  $sQuery = "INSERT INTO udomljenazivotinja (sifraUdomljeneZivotinje, sifraUdomitelja) VALUES (?,?)";
+  $sQuery = "INSERT INTO udomljenazivotinja (sifraUdomljeneZivotinje, sifraUdomiteljaZivotinje) VALUES (?,?)";
   $oRecord = $oConnection->prepare($sQuery);
   $oRecord->execute([$sifraUdomljeneZivotinje, $sifraUdomitelja]);
   echo "Životinja je uspješno udomljena";

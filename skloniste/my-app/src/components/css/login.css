@@ -38,6 +38,13 @@
 
 .lozinka
 {
-    margin-left: 50px;
+    margin-left: 50px; 
 }
 
+.linkPrijava
+{
+    color: rgb(202, 156, 96); 
+}
+
+label
+{margin-right: 5px;}

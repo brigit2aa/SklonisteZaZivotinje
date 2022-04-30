@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { Table, Button, Modal } from 'react-bootstrap';
 import '../css/tablica.css';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import CloseIcon from '@material-ui/icons/Close';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import SearchIcon from '@material-ui/icons/Search';
 
 class TablicaUdomitelji extends Component {
     constructor() {
@@ -10,6 +13,7 @@ class TablicaUdomitelji extends Component {
             udomitelji: [],
             filter: "",
             modal: false,
+            modalBezZivotinja: false,
             zivotinjeKodUdomitelja: []
         }
     }
@@ -20,7 +24,7 @@ class TablicaUdomitelji extends Component {
     }
 
     dohvatiZivotinjeKodUdomitelja(sifraUdomitelja) {
-        fetch("http://localhost/WPSP_SPJ_KonstrukcijskiZadatak/action/zivotinjaKodUdomitelja.php?sifraUdomitelja="+sifraUdomitelja).then(response => response.json())
+        fetch("http://localhost/WPSP_SPJ_KonstrukcijskiZadatak/action/zivotinjaKodUdomitelja.php?sifraUdomitelja=" + sifraUdomitelja).then(response => response.json())
             .then(response => this.setState({ zivotinjeKodUdomitelja: response }))
     }
 
@@ -36,11 +40,17 @@ class TablicaUdomitelji extends Component {
     otvorModal = (sifraUdomitelja) => {
         this.setState({ modal: true });
         this.dohvatiZivotinjeKodUdomitelja(sifraUdomitelja);
-        
+
     }
 
     zatvoriModal = () => this.setState({ modal: false });
 
+
+    otvoriModalBezZivotinje = () => {
+        this.setState({ modalBezZivotinja: true });
+    }
+
+    zatvoriModalBezZivotinje = () => this.setState({ modalBezZivotinja: false });
 
     render() {
 
@@ -58,7 +68,7 @@ class TablicaUdomitelji extends Component {
                 <div className="zaglavljeTablice">
                     <input className="trazilicaUdomitelj"
                         type="text"
-                        placeholder="Pretraži udomitelje..." value={filter} onChange={this.trazilica.bind(this)} />
+                        placeholder="Pretraži udomitelje..." value={filter} onChange={this.trazilica.bind(this)}/><SearchIcon className="gumb"/>
                     <p className="naslovUdomitelj">Udomitelji</p>
                 </div>
                 <div>
@@ -86,47 +96,55 @@ class TablicaUdomitelji extends Component {
                                     <td>
                                         <>
                                             <div>
-                                                <FavoriteIcon className="gumb" onClick={()=>this.otvorModal(udomitelj.sifraUdomitelja)}></FavoriteIcon>
+                                               {udomitelj.status ? <Button className="gumbSirina" size="sm" variant="light" onClick={() => this.otvorModal(udomitelj.sifraUdomitelja)}><FavoriteIcon className="gumb" /></Button> : <Button className="gumbSirina" size="sm" variant="light" onClick={() => this.otvoriModalBezZivotinje()}><FavoriteBorderIcon className="gumb" /></Button>}
                                             </div>
-                                            <Modal  show={this.state.modal} onHide={this.zatvoriModal} >
-                                                <Modal.Header zatvoriModal>
-                                                    <Modal.Title></Modal.Title>
+                                            {/*Modal sa popisom životinja koje su kod udomitelja*/}
+                                            <Modal show={this.state.modal} onHide={this.zatvoriModal} >
+                                                <Modal.Header zatvoriModal className="zaglavljeTablice">
+                                                    <p className="zivotinjaKodUdomitelja">Životinja od udomitelja</p>
+                                                    <Modal.Title> </Modal.Title>
                                                 </Modal.Header>
                                                 <Modal.Body >
                                                     <div>
-                                                        <div className="zaglavljeTablice">
-                                                            <p className="naslovUdomljene">Životinje kod udomitelja</p>
-                                                        </div>
                                                         <div>
-                                                            <Table responsive="sm">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Šifra životinje</th>
-                                                                        <th>Ime životinje</th>
-                                                                        <th>Pasmina</th>
-                                                                        <th>Starost</th>
-                                                                        <th>Spol</th>
-                                                                        <th>Vrsta</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    {this.state.zivotinjeKodUdomitelja.map(zivotinjaKodUdomitelja => {
-                                                                        return <tr>
-                                                                            <td>{zivotinjaKodUdomitelja.sifraZivotinje}</td>
-                                                                            <td>{zivotinjaKodUdomitelja.imeZivotinje}</td>
-                                                                            <td>{zivotinjaKodUdomitelja.pasmina}</td>
-                                                                            <td>{zivotinjaKodUdomitelja.starost}</td>
-                                                                            <td>{zivotinjaKodUdomitelja.spol}</td>
-                                                                            <td>{zivotinjaKodUdomitelja.vrsta}</td>
-                                                                        </tr>
-                                                                    })}
-                                                                </tbody>
-                                                            </Table>
+                                                            {this.state.zivotinjeKodUdomitelja.map(zivotinjaKodUdomitelja => {
+                                                                return <ul>
+                                                                    <ol>___________________________________________________________</ol>
+                                                                    <ol>Šifra životinje: {zivotinjaKodUdomitelja.sifraZivotinje}</ol>
+                                                                    <ol>Ime životinje: {zivotinjaKodUdomitelja.imeZivotinje}</ol>
+                                                                    <ol>Pasmina: {zivotinjaKodUdomitelja.pasmina}</ol>
+                                                                    <ol>Starost: {zivotinjaKodUdomitelja.starost}</ol>
+                                                                    <ol>Spol: {zivotinjaKodUdomitelja.spol}</ol>
+                                                                    <ol>Vrsta: {zivotinjaKodUdomitelja.vrsta}</ol>
+                                                                    <ol>___________________________________________________________</ol>
+                                                                </ul>
+                                                            })}
                                                         </div >
                                                     </div>
                                                 </Modal.Body>
                                                 <Modal.Footer>
-                                                    <Button variant="light" onClick={this.zatvoriModal}>Zatvori</Button>
+                                                    <Button size="sm" variant="light" onClick={this.zatvoriModal}><CloseIcon className="gumb"/></Button>
+                                                </Modal.Footer>
+                                            </Modal>
+                                        </>
+                                        <>
+                                        {/*Modal koji prikazuje tekst poruke "Udomitelj nema udomljenih životinja!"*/}
+                                        <Modal show={this.state.modalBezZivotinja} onHide={this.zatvoriModalBezZivotinje} >
+                                                <Modal.Header zatvoriModalBezZivotinje className="zaglavljeTablice">
+                                                    <p className="zivotinjaKodUdomitelja">Životinja od udomitelja</p>
+                                                    <Modal.Title> </Modal.Title>
+                                                </Modal.Header>
+                                                <Modal.Body >
+                                                    <div>
+                                                        <div>
+                                                            <p className="bezZivotinje">___________________________________________________________</p>
+                                                            <p className="bezZivotinjeText">Udomitelj nema udomljenih životinja!</p>
+                                                            <p className="bezZivotinje">___________________________________________________________</p>
+                                                        </div >
+                                                    </div>
+                                                </Modal.Body>
+                                                <Modal.Footer>
+                                                    <Button size="sm" variant="light" onClick={this.zatvoriModalBezZivotinje}><CloseIcon className="gumb"/></Button>
                                                 </Modal.Footer>
                                             </Modal>
                                         </>

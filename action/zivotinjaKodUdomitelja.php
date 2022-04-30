@@ -16,7 +16,7 @@ $sifraUdomitelja = $_GET['sifraUdomitelja'];
 
 try
 {
-  $sQuery = "SELECT * FROM udomljenazivotinja INNER JOIN zivotinja ON zivotinja.sifraZivotinje = udomljenazivotinja.sifraUdomljeneZivotinje WHERE udomljenazivotinja.sifraUdomitelja = ?"; 
+  $sQuery = "SELECT * FROM udomljenazivotinja INNER JOIN zivotinja ON zivotinja.sifraZivotinje = udomljenazivotinja.sifraUdomljeneZivotinje WHERE udomljenazivotinja.sifraUdomiteljaZivotinje = ?"; 
   $oRecord = $oConnection->prepare($sQuery);
   $oRecord->execute([$sifraUdomitelja]);
   $oPoljeZivotinjaKodUdomitelja = [];

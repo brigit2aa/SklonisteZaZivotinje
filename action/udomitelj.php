@@ -8,8 +8,9 @@ class Udomitelj
 	public $adresa = "";
 	public $email = "";
 	public $telMob = ""; 
+	public $status = "";
 
-	public function __construct($sifraUdomitelja, $ime, $prezime, $adresa, $email, $telMob)
+	public function __construct($sifraUdomitelja, $ime, $prezime, $adresa, $email, $telMob, $status)
 	{
 		$this->sifraUdomitelja = $sifraUdomitelja;
 		$this->ime = $ime;
@@ -17,6 +18,7 @@ class Udomitelj
 		$this->adresa = $adresa;
 		$this->email = $email;
 		$this->telMob = $telMob;
+		$this->status = $status;
 	}
 }
 ?>

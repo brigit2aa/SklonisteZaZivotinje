@@ -51,7 +51,7 @@ table {
     background-image: url('../images/boja.png');
     display: inline-block;
     margin-left: 16%;
-    margin-right: 40%;
+    margin-right: 39%;
 }
 th{
      text-transform: uppercase;
@@ -81,7 +81,7 @@ th{
     width: 20%;
     color: rgb(67, 75, 94);
     margin-top: 1.5%;
-    margin-left: 1.5%;
+    margin-left: 1%;
 }
 .gumb
 {
@@ -99,7 +99,7 @@ th{
     width: 20%;
     color: rgb(67, 75, 94);
     margin-top: 1.5%;
-    margin-left: 1.5%;
+    margin-left: 0.5%;
 }
 
 
@@ -129,3 +129,53 @@ th{
     color: rgb(202, 156, 96); 
     margin-left: 5px;
 }
+
+.zivotinjaKodUdomitelja
+{
+    color: rgb(202, 156, 96);
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    transition: .5s;
+    padding: 0.5%;
+    margin-top: 3%;
+    margin-left: 20%;
+    background-image: url('../images/boja.png');
+    
+}
+
+ol{
+    font-size: 12px; 
+    text-align:center;
+    margin-right: 10%;
+}
+
+.bezZivotinje{
+    font-size: 12px; 
+    text-align:center;
+}
+.naslovUdomi
+{
+    color: rgb(202, 156, 96);
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    transition: .5s;
+    padding: 0.5%;
+    margin-top: 3%;
+    margin-left: 40%;
+    background-image: url('../images/boja.png');  
+}
+
+.gumbSirina
+{
+    width: 75px;;
+}
+
+
+.bezZivotinjeText
+{
+    font-size: 12px; 
+    text-align:center;
+    font-weight: bold;
+    color: rgb(67, 75, 94);
+}
+

@@ -9,17 +9,16 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 
 include_once 'connection.php';
 
-///ova radi
+
 $data = json_decode(file_get_contents("php://input"), true);
 
-$sifraZivotinje = $data["sifraZivotinje"];
-//////////
+$sifraZivotinje = $data["sifraUdomljeneZivotinje"];
+
 try
 {
   $sQuery = "DELETE FROM udomljenazivotinja WHERE sifraUdomljeneZivotinje=?"; 
   $oRecord = $oConnection->prepare($sQuery);
   $oRecord->execute([$sifraZivotinje]);
-  //echo "Životinja je uspješno obrisana. " $idZivotinja;
 } 
 catch(PDOException $pe)
 {

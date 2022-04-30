@@ -14,24 +14,28 @@ include 'udomitelj.php';
 $sifraZivotinje = $_GET['sifraZivotinje'];
 
 //Prikazuje udomitelja od životinje 
+
 try
 {
-	$sQuery = "SELECT * FROM udomljenazivotinja INNER JOIN udomitelj ON udomitelj.sifraUdomitelja = udomljenazivotinja.sifraUdomljeneZivotinje WHERE udomljenazivotinja.sifraUdomljeneZivotinje = ?";
-	$oRecord = $oConnection->prepare($sQuery);
-	$oRecord->execute([$sifraZivotinje]);
-	$oPoljeUdomiteljZivotinje = [];
-	while ($oRow = $oRecord->fetch(PDO::FETCH_BOTH)) {
-		$oPoljeUdomiteljZivotinje[] = $oRow;
-	}
-	if($oPoljeUdomiteljZivotinje == null){
-		$emptyArray = [];
-		echo json_encode($emptyArray);
-	}
-	else{
-		echo json_encode($oPoljeUdomiteljZivotinje);
-	}
+  $sQuery = "SELECT * FROM udomljenazivotinja INNER JOIN udomitelj ON udomitelj.sifraUdomitelja = udomljenazivotinja.sifraUdomiteljaZivotinje WHERE udomljenazivotinja.sifraUdomljeneZivotinje = ?"; 
+  $oRecord = $oConnection->prepare($sQuery);
+  $oRecord->execute([$sifraZivotinje]);
+  $oPoljeUdomiteljZivotinje = [];
+while($oRow = $oRecord->fetch(PDO::FETCH_BOTH))
+{  
+     $oPoljeUdomiteljZivotinje[]= $oRow;  
 }
-catch(PDOException $pe){
-	die("Greška: Nije moguće izvršiti $sQuery. " . $pe->getMessage());
+if($oPoljeUdomiteljZivotinje == null){$emptyArray = [];
+	echo json_encode($emptyArray);
+}
+else{
+  echo json_encode($oPoljeUdomiteljZivotinje);
+}
+
+} 
+
+catch(PDOException $pe)
+{
+  die("Greška: Nije moguće izvršiti $sQuery. " . $pe->getMessage());
 }
 ?>

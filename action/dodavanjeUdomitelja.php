@@ -19,7 +19,7 @@ $telMob = $data['telMob'];
  
 try
 {
-  $sQuery = "INSERT INTO udomitelj (sifraUdomitelja, ime, prezime, adresa, rmail, telMob)
+  $sQuery = "INSERT INTO udomitelj (sifraUdomitelja, ime, prezime, adresa, email, telMob)
   VALUES (?, ?, ?, ?, ?, ?)";
   $oRecord = $oConnection->prepare($sQuery);
   $oRecord->execute([$sifraUdomitelja, $ime, $prezime, $adresa, $email, $telMob]);

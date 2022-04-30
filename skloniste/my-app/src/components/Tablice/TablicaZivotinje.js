@@ -7,7 +7,9 @@ import AddCircleIcon from '@material-ui/icons/AddCircle';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import CloseIcon from '@material-ui/icons/Close';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import PetsIcon from '@material-ui/icons/Pets';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import SearchIcon from '@material-ui/icons/Search';
+
 class TablicaZivotinje extends Component {
     constructor() {
         super();
@@ -29,7 +31,17 @@ class TablicaZivotinje extends Component {
             spolUpdate: "",
             vrstaUpdate: "",
             modal: false,
-            udomiteljiZivotinja: []
+            modalUdomljavanje: false,
+            udomiteljiZivotinja: [],
+            udomitelji: [],
+            showHideUdomitelj: false,
+            sifraUdomitelja: "",
+            ime: "",
+            prezime: "",
+            adresa: "",
+            email: "",
+            telMob: "",
+            filterUdomitelja: ""
         }
     }
 
@@ -39,13 +51,19 @@ class TablicaZivotinje extends Component {
     }
 
     dohvatiUdomiteljaZivotinje(sifraZivotinje) {
-        fetch("http://localhost/WPSP_SPJ_KonstrukcijskiZadatak/action/udomiteljZivotinje.php?sifraZivotinje="+sifraZivotinje).then(response => response.json())
+        fetch("http://localhost/WPSP_SPJ_KonstrukcijskiZadatak/action/udomiteljZivotinje.php?sifraZivotinje=" + sifraZivotinje).then(response => response.json())
             .then(response => this.setState({ udomiteljiZivotinja: response }))
+    }
+
+    dohvatiUdomitelje() {
+        fetch("http://localhost/WPSP_SPJ_KonstrukcijskiZadatak/action/dohvacanjeUdomitelja.php").then(response =>
+            response.json()).then(response => this.setState({ udomitelji: response }))
     }
 
     componentDidMount = async () => {
         this.dohvatiZivotinje();
         this.dohvatiUdomiteljaZivotinje();
+        this.dohvatiUdomitelje();
     }
 
     dodajZivotinju() {
@@ -135,26 +153,86 @@ class TablicaZivotinje extends Component {
         }
     };
 
+    dodajUdomitelja() {
+        if (window.confirm("Želite li dodati novog udomitelja?")) {
+            fetch('http://localhost/WPSP_SPJ_KonstrukcijskiZadatak/action/dodavanjeUdomitelja.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(this.state)
+
+            })
+            alert('Udomitelj ' + this.state.ime + ' je uspješno dodan!')
+
+            this.setState({
+                sifraUdomitelja: "",
+                ime: "",
+                prezime: "",
+                adresa: "",
+                email: "",
+                telMob: ""
+            });
+        }
+        this.setState({
+            showHideUdomitelj: !this.state.showHideUdomitelj,
+        });
+
+        this.dohvatiUdomitelje();
+    }
+
+    udomiZivotinju(sifraOsobe) {
+        if (window.confirm("Želite li udomiti životinju?")) {
+            fetch("http://localhost/WPSP_SPJ_KonstrukcijskiZadatak/action/udomiiZivotinju.php", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    sifraUdomljeneZivotinje: this.props.sifraZivotinje,
+                    sifraUdomiteljaZivotinje: sifraOsobe
+                })
+
+            }).then((result) => {
+                result.json().then((response) => {
+                    alert("Životinja je udomljena!");
+                    this.dohvatiZivotinje();
+                })
+            })
+
+        }
+    };
     trazilica = event => {
         this.setState({ filter: event.target.value });
     };
 
-    otvorModal = (sifraZivotinje) => {
+    trazilicaUdimtelja = event => {
+        this.setState({ filterUdomitelja: event.target.value });
+    };
+
+    //Modal za prikaz udomitelja životinje
+    otvorModalZaUdomljene = (sifraZivotinje) => {
         this.setState({ modal: true });
         this.dohvatiUdomiteljaZivotinje(sifraZivotinje);
     }
-
+    //Zatvaranje modala s prikazom udomitelja životinje
     zatvoriModal = () => this.setState({ modal: false });
 
-    render() {
+    //Modal za prikaz forme za dodavanje udomitelja i udomljavanje
+    otvorModalZaUdomljavanje = () => this.setState({ modalUdomljavanje: true });
 
+    //Zatvaranje modala s formom za dodavanje udomitelja i udomljavanje
+    zatvoriModalUdomljavanje = () => this.setState({ modalUdomljavanje: false });
+
+    render() {
+        //Prikaz forme za dodavanje životinje
         var FormaZaDodavanjeZivotinja = e => {
             this.setState({ showHide: !this.state.showHide });
         }
 
-
         const x = this.state.showHide;
 
+        //Prikaz forme za ažuriranje životinje
         var FormaZaAzuriranjeZivotinja = zivotinja => {
 
             this.setState({
@@ -170,10 +248,25 @@ class TablicaZivotinje extends Component {
 
         const y = this.state.showHideUpdate;
 
+        //Prikaz forme za dodavanje udomitelja
+        var FormaZaDodavanjeUdomitelja = e => {
+            this.state({ showHideUdomitelj: !this.state.showHideUdomitelj });
+        }
+
+        const z = this.state.showHideUdomitelj;
+
+        //Tražilica životinja
         const { filter, zivotinje } = this.state;
 
         var PretraziPodatke = zivotinje.filter(zivotinja => {
             return zivotinja.imeZivotinje.toLowerCase().includes(filter.toLocaleLowerCase()) || zivotinja.vrsta.toLowerCase().includes(filter.toLocaleLowerCase())
+        });
+
+        //Tražilica udomitelja
+        const { filterUdomitelja, udomitelji } = this.state;
+
+        var PretraziPodatkeUdomitelja = udomitelji.filter(udomitelj => {
+            return udomitelj.ime.toLowerCase().includes(filterUdomitelja.toLocaleLowerCase()) || udomitelj.prezime.toLowerCase().includes(filterUdomitelja.toLocaleLowerCase())
         });
 
         return (
@@ -181,7 +274,7 @@ class TablicaZivotinje extends Component {
                 <div className="zaglavljeTablice">
                     <input className="trazilicaZivotinja"
                         type="text"
-                        placeholder="Pretraži životinje..." value={filter} onChange={this.trazilica} />
+                        placeholder="Pretraži životinje..." value={filter} onChange={this.trazilica}/><SearchIcon className="gumb"/>
                     <p className="naslov">Životinje</p>
                     <AddCircleIcon className="dodaj" onClick={FormaZaDodavanjeZivotinja}>{x ? '<AddCircleIcon/>' : '<AddCircleIcon/>'}</AddCircleIcon>
                 </div>
@@ -207,7 +300,7 @@ class TablicaZivotinje extends Component {
                                 <td>{x && (<input placeholder="Starost..." value={this.state.starost} onChange={(data) => { this.setState({ starost: data.target.value }) }}></input>)}</td>
                                 <td>{x && (<input placeholder="Spol..." value={this.state.spol} onChange={(data) => { this.setState({ spol: data.target.value }) }}></input>)}</td>
                                 <td>{x && (<input placeholder="Vrsta..." value={this.state.vrsta} onChange={(data) => { this.setState({ vrsta: data.target.value }) }}></input>)}</td>
-                                <td><th>{x && (<CheckCircleIcon className="spremi" onClick={() => this.dodajZivotinju()}></CheckCircleIcon>)}{x && (<CloseIcon className="odustani" onClick={FormaZaDodavanjeZivotinja} />)}</th></td>
+                                <td><th>{x && (<Button className="gumbSirina" size="sm" variant="light" onClick={() => this.dodajZivotinju()}><CheckCircleIcon className="gumb" /></Button>)}{x && (<Button className="gumbSirina" size="sm" variant="light" onClick={FormaZaDodavanjeZivotinja}><CloseIcon className="gumb" /></Button>)}</th></td>
                             </tr>
                             {/*Forma za ažuriranje životinje*/}
                             <tr className="margina">
@@ -217,7 +310,7 @@ class TablicaZivotinje extends Component {
                                 <td>{y && (<input type='text' name='ime' value={this.state.starostUpdate} onChange={(data) => { this.setState({ starostUpdate: data.target.value }) }}></input>)}</td>
                                 <td>{y && (<input type='text' name='starost' value={this.state.spolUpdate} onChange={(data) => { this.setState({ spolUpdate: data.target.value }) }}></input>)}</td>
                                 <td>{y && (<input type='text' name='vrsta' value={this.state.vrstaUpdate} onChange={(data) => { this.setState({ vrstaUpdate: data.target.value }) }}></input>)}</td>
-                                <td><th>{y && (<CheckCircleIcon className="spremi" onClick={() => this.azurirajZivotinju()}></CheckCircleIcon>)}{y && (<CloseIcon className="odustani" onClick={FormaZaAzuriranjeZivotinja} />)}</th></td>
+                                <td><th>{y && (<Button className="gumbSirina" size="sm" variant="light" onClick={() => this.azurirajZivotinju()}><CheckCircleIcon className="gumb" /></Button>)}{y && (<Button className="gumbSirina" size="sm" variant="light" onClick={FormaZaAzuriranjeZivotinja}><CloseIcon className="gumb" /></Button>)}</th></td>
                             </tr>
                         </thead>
                         <tbody>
@@ -229,51 +322,90 @@ class TablicaZivotinje extends Component {
                                     <td>{zivotinja.starost}</td>
                                     <td>{zivotinja.spol}</td>
                                     <td>{zivotinja.vrsta}</td>
-                                    <td> <> <div> {zivotinja.status ?<FavoriteIcon className="status" onClick={()=>this.otvorModal(zivotinja.sifraZivotinje)}/> : <PetsIcon className="status" />}</div>  
-                                            <Modal show={this.state.modal} onHide={this.zatvoriModal}>
-                                                <Modal.Header zatvoriModal>
-                                                    <Modal.Title></Modal.Title>
-                                                </Modal.Header>
-                                                <Modal.Body>
+                                    <td> <> <div> {zivotinja.status ? <Button size="sm" className="gumbSirina" variant="light" onClick={() => this.otvorModalZaUdomljene(zivotinja.sifraZivotinje)}><FavoriteIcon className="status" /></Button> : <Button size="sm" variant="light" onClick={() => this.otvorModalZaUdomljavanje()} >Ud<FavoriteBorderIcon className="status" />mi</Button>}</div>
+                                        {/*Modal prikazuje udomitelja od životinje*/}
+                                        <Modal show={this.state.modal} onHide={this.zatvoriModal}>
+                                            <Modal.Header zatvoriModal className="zaglavljeTablice">
+                                                <p className="zivotinjaKodUdomitelja">Udomitelj od životinje</p>
+                                                <Modal.Title></Modal.Title>
+                                            </Modal.Header>
+                                            <Modal.Body>
+                                                <div>
                                                     <div>
-                                                        <div className="zaglavljeTablice">
-                                                            <p className="naslovUdomljene">Udomitelj od životinje</p>
-                                                        </div>
-                                                        <div>
-                                                            <Table responsive="sm">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>Šifra</th>
-                                                                        <th>Ime</th>
-                                                                        <th>Prezime</th>
-                                                                        <th>Adresa</th>
-                                                                        <th>E-mail</th>
-                                                                        <th>Tel/Mob</th>
+                                                        {this.state.udomiteljiZivotinja.map(udomiteljZivotinje => {
+                                                            return <ul>
+                                                                <ol>___________________________________________________________</ol>
+                                                                <ol>Šifra: {udomiteljZivotinje.sifraUdomitelja}</ol>
+                                                                <ol>Ime: {udomiteljZivotinje.ime}</ol>
+                                                                <ol>Prezime: {udomiteljZivotinje.prezime}</ol>
+                                                                <ol>Adresa: {udomiteljZivotinje.adresa}</ol>
+                                                                <ol>E-mail: {udomiteljZivotinje.email}</ol>
+                                                                <ol>Tel/Mob: {udomiteljZivotinje.telMob}</ol>
+                                                                <ol>___________________________________________________________</ol>
+                                                            </ul>
+                                                        })}
+                                                    </div >
+                                                </div>
+                                            </Modal.Body>
+                                            <Modal.Footer>
+                                                <Button variant="light" size="sm" onClick={this.zatvoriModal}><CloseIcon className="gumb" /></Button>
+                                            </Modal.Footer>
+                                        </Modal>
+                                        {/*Modal prikazuje formu za udomljavanje životinje i dodavanje udomitelja*/}
+                                        <Modal size="xl" show={this.state.modalUdomljavanje} onHide={this.zatvoriModalUdomljavanje}>
+                                            <Modal.Header zatvoriModal className="zaglavljeTablice">
+                                                <p className="naslovUdomi">Udomi životinju</p>
+                                                <Modal.Title id="example-modal-sizes-title-xl"></Modal.Title>
+                                            </Modal.Header>
+                                            <Modal.Body>
+                                                <div>
+                                                    <div>
+                                                        <Table responsive="sm">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Šifra</th>
+                                                                    <th>Ime</th>
+                                                                    <th>Prezime</th>
+                                                                    <th>Adresa</th>
+                                                                    <th>E-mail</th>
+                                                                    <th>Tel/Mob</th>
+                                                                    <th></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr className="margina">
+                                                                    <td><input placeholder="Šifra..." value={this.state.sifraUdomitelja} onChange={(data) => { this.setState({ sifraUdomitelja: data.target.value }) }}></input></td>
+                                                                    <td><input placeholder="Ime..." value={this.state.ime} onChange={(data) => { this.setState({ ime: data.target.value }) }}></input></td>
+                                                                    <td><input placeholder="Prezime..." value={this.state.prezime} onChange={(data) => { this.setState({ prezime: data.target.value }) }}></input></td>
+                                                                    <td><input placeholder="Adresa..." value={this.state.adresa} onChange={(data) => { this.setState({ adresa: data.target.value }) }}></input></td>
+                                                                    <td><input placeholder="E-mail..." value={this.state.email} onChange={(data) => { this.setState({ email: data.target.value }) }}></input></td>
+                                                                    <td><input placeholder="Tel/Mob..." value={this.state.telMob} onChange={(data) => { this.setState({ telMob: data.target.value }) }}></input></td>
+                                                                    <td><Button size="sm" variant="light" onClick={() => this.dodajUdomitelja()}><AddCircleIcon className="gumb" />Dodaj</Button></td>
+                                                                </tr>
+                                                                {/*this.state.udomitelji*/PretraziPodatkeUdomitelja.map(udomitelj => {
+                                                                    return <tr>
+                                                                        <td>{udomitelj.sifraUdomitelja}</td>
+                                                                        <td>{udomitelj.ime}</td>
+                                                                        <td>{udomitelj.prezime}</td>
+                                                                        <td>{udomitelj.adresa}</td>
+                                                                        <td>{udomitelj.email}</td>
+                                                                        <td>{udomitelj.telMob}</td>
+                                                                        <td><Button variant="light" size="sm" onClick={() => this.state.udomiZivotinju(udomitelj.sifraUdomiteljaZivotinje)}> Ud<FavoriteBorderIcon className="gumb" />mi</Button></td>
                                                                     </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    {this.state.udomiteljiZivotinja.map(udomiteljZivotinje => {
-                                                                        return <tr>
-                                                                            <td>{udomiteljZivotinje.sifraUdomitelja}</td>
-                                                                            <td>{udomiteljZivotinje.ime}</td>
-                                                                            <td>{udomiteljZivotinje.prezime}</td>
-                                                                            <td>{udomiteljZivotinje.adresa}</td>
-                                                                            <td>{udomiteljZivotinje.email}</td>
-                                                                            <td>{udomiteljZivotinje.telMob}</td>
-                                                                        </tr>
-                                                                    })}
-                                                                </tbody>
-                                                            </Table>
-                                                        </div >
-                                                    </div>
-                                                </Modal.Body>
-                                                <Modal.Footer>
-                                                    <Button variant="light" onClick={this.zatvoriModal}>Zatvori</Button>
-                                                </Modal.Footer>
-                                            </Modal>
-                                        </></td>
-                                    <td><DeleteIcon className="gumb" onClick={() => this.obrisiZivoinju(zivotinja.sifraZivotinje)}></DeleteIcon></td>
-                                    <td> <UpdateIcon className="gumb" onClick={() => FormaZaAzuriranjeZivotinja(zivotinja)}></UpdateIcon></td>
+                                                                })}
+                                                            </tbody>
+                                                        </Table>
+                                                    </div >
+                                                </div>
+                                            </Modal.Body>
+                                            <Modal.Footer>
+                                                <input className="trazilicaZivotinja" type="text" placeholder="Pretraži udomitelje..." value={filterUdomitelja} onChange={this.trazilicaUdimtelja}/><SearchIcon className="gumb"/>
+                                                <Button variant="light" size="sm" onClick={this.zatvoriModalUdomljavanje}><CloseIcon className="gumb" /></Button>
+                                            </Modal.Footer>
+                                        </Modal>
+                                    </></td>
+                                    <td><Button className="gumbSirina" size="sm" variant="light" onClick={() => this.obrisiZivoinju(zivotinja.sifraZivotinje)}><DeleteIcon className="gumb" ></DeleteIcon></Button></td>
+                                    <td> <Button className="gumbSirina" size="sm" variant="light" onClick={() => FormaZaAzuriranjeZivotinja(zivotinja)}><UpdateIcon className="gumb" ></UpdateIcon></Button></td>
                                 </tr>
                             })}
                         </tbody>

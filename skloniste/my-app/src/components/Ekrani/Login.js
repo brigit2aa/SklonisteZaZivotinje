@@ -17,17 +17,17 @@ function Login(props) {
 
       <form action="" method="">
         <div className="form-group">
-          <label>Korisničko ime:</label>
-          <input type="text" />
+          <label>Korisničko ime: </label>
+          <input type="text" className='razmak'/>
           <br />
           <br />
-          <label className='lozinka'>Lozinka:</label>
-          <input type="password" />
+          <label  className='lozinka'>Lozinka: </label>
+          <input type="password" className='razmak'/>
           <br />
           <br />
-          <Button className="prijava" variant="outline-dark" onClick={(e) => obradaPrijave(e)}>Prijavi se</Button>
+          <Button className="prijava" variant="light" onClick={(e) => obradaPrijave(e)}>Prijavi se</Button>
           <br />
-          {/*<Link className="linkPrijava" to="/Registracija">Registriraj se!</Link>*/}
+          <Link className="linkPrijava" to="/Registracija">Kreiraj novi korisnički račun</Link>
         </div>
       </form>
     </div>
