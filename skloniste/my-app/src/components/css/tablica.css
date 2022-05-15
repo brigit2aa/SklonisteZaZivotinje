@@ -11,19 +11,19 @@
    
 }
 table {
-    color: rgb(67, 75, 94);
+    color: #3A444F;
     width: 100%;
     font-size: 12px;
     
 }
 
 .naslov {
-    color: rgb(202, 156, 96);
+    color: #DAAA78;
     text-transform: uppercase;
     letter-spacing: 5px;
     transition: .5s;
     padding: 0.5%;
-    background-image: url('../images/boja.png');
+    background-color: #3A444F;
     display: inline-block;
     margin-left: 22%;
     margin-right: 41%;
@@ -31,28 +31,29 @@ table {
 
 .naslovUdomitelj
 {
-    color: rgb(202, 156, 96);
+    color: #DAAA78;
     text-transform: uppercase;
     letter-spacing: 5px;
     transition: .5s;
     padding: 0.5%;
-    background-image: url('../images/boja.png');
+    background-color: #3A444F;
     display: inline-block;
     margin-left: 22%;
     margin-right: 43%;
 }
 .naslovUdomljene
 {
-    color: rgb(202, 156, 96);
+    color: #DAAA78;
     text-transform: uppercase;
     letter-spacing: 5px;
     transition: .5s;
     padding: 0.5%;
-    background-image: url('../images/boja.png');
+    background-color: #3A444F;
     display: inline-block;
     margin-left: 16%;
     margin-right: 39%;
 }
+
 th{
      text-transform: uppercase;
      letter-spacing: 5px;
@@ -71,46 +72,48 @@ th{
 .trazilicaUdomitelj
 {
     width: 20%;
-    color: rgb(67, 75, 94);
+    color: #3A444F;
     margin-top: 1.5%;
     margin-left: 1.5%;
+    font-size: 12px;
 }
 
 .trazilicaUdomljene
 {
     width: 20%;
-    color: rgb(67, 75, 94);
+    color: #3A444F;
     margin-top: 1.5%;
     margin-left: 1%;
+    font-size: 12px;
 }
 .gumb
 {
-    color: rgb(202, 156, 96);
+    color: #DAAA78;
 }
 
 .dodaj
 {
-    color: rgb(202, 156, 96);
+    color: #DAAA78;
     margin-right: 0.5%;
 }
 
 .trazilicaZivotinja
 {
     width: 20%;
-    color: rgb(67, 75, 94);
+    color: #3A444F;
     margin-top: 1.5%;
     margin-left: 0.5%;
+    font-size: 12px;
 }
-
 
 .zaglavljeTablice
 {
-    background-image: url('../images/boja.png');
+    background-color: #3A444F;
 }
 
 .spremi
 {
-    color: rgb(202, 156, 96); 
+    color: #DAAA78;
     margin-left: 15px;
 }
 
@@ -121,25 +124,25 @@ th{
 
 .status
 {
-    color: rgb(202, 156, 96);
+    color: #DAAA78;
 }
 
 .odustani
 {
-    color: rgb(202, 156, 96); 
+    color: #DAAA78;
     margin-left: 5px;
 }
 
 .zivotinjaKodUdomitelja
 {
-    color: rgb(202, 156, 96);
+    color: #DAAA78;
     text-transform: uppercase;
     letter-spacing: 5px;
     transition: .5s;
     padding: 0.5%;
     margin-top: 3%;
     margin-left: 20%;
-    background-image: url('../images/boja.png');
+    background-color: #3A444F;
     
 }
 
@@ -153,21 +156,22 @@ ol{
     font-size: 12px; 
     text-align:center;
 }
+
 .naslovUdomi
 {
-    color: rgb(202, 156, 96);
+    color: #DAAA78;
     text-transform: uppercase;
     letter-spacing: 5px;
     transition: .5s;
     padding: 0.5%;
     margin-top: 3%;
     margin-left: 40%;
-    background-image: url('../images/boja.png');  
+    background-color: #3A444F;
 }
 
 .gumbSirina
 {
-    width: 75px;;
+    width: 80px;;
 }
 
 
@@ -176,6 +180,6 @@ ol{
     font-size: 12px; 
     text-align:center;
     font-weight: bold;
-    color: rgb(67, 75, 94);
+    color: #3A444F;
 }
 

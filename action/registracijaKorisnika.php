@@ -10,19 +10,17 @@ include 'korisnik.php';
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-$sifraKorisnika =$data['sifraKorisnika'];
 $imeKorisnika = $data['imeKorisnika'];
 $prezimeKorisnika = $data['prezimeKorisnika'];
 $korisnickoIme = $data['korisnickoIme'];
 $lozinka = $data['lozinka'];
-$ponovljenaLozinka = $data['ponovljenaLozinka'];
 
 try
 {
-  $sQuery = "INSERT INTO korisnik (sifraKorisnika, imeKorisnika, prezimeKorisnika, korisnickoIme, lozinka, ponovljenaLozinka)
-  VALUES (?, ?, ?, ?, ?, ?, ?)";
+  $sQuery = "INSERT INTO korisnik (imeKorisnika, prezimeKorisnika, korisnickoIme, lozinka)
+  VALUES (?, ?, ?, ?)";
   $oRecord = $oConnection->prepare($sQuery);
-  $oRecord->execute([$sifraKorisnika, $imeKorisnika, $prezimeKorisnika, $korisnickoIme, $lozinka, $ponovljenaLozinka]);
+  $oRecord->execute([$imeKorisnika, $prezimeKorisnika, $korisnickoIme, $lozinka]);
   echo "Korisnik je uspješno dodan.";
 } 
 catch(PDOException $pe)

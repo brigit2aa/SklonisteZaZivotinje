@@ -72,7 +72,7 @@ class TablicaUdomitelji extends Component {
                     <p className="naslovUdomitelj">Udomitelji</p>
                 </div>
                 <div>
-                    <Table responsive="sm">
+                    <Table responsive="xl">
                         <thead>
                             <tr>
                                 <th>Šifra</th>

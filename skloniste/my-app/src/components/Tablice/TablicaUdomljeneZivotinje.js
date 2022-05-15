@@ -63,7 +63,7 @@ class TablicaUdomiteljeneZivotinje extends Component {
                     <p className="naslovUdomljene">Udomljene životinje</p>
                 </div>
                 <div>
-                    <Table responsive="sm">
+                    <Table responsive="xl">
                         <thead>
                             <tr>
                                 <th>Šifra životinje</th>

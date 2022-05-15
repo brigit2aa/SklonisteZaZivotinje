@@ -56,8 +56,8 @@ class TablicaZivotinje extends Component {
     }
 
     dohvatiUdomitelje() {
-        fetch("http://localhost/WPSP_SPJ_KonstrukcijskiZadatak/action/dohvacanjeUdomitelja.php").then(response =>
-            response.json()).then(response => this.setState({ udomitelji: response }))
+       fetch("http://localhost/WPSP_SPJ_KonstrukcijskiZadatak/action/dohvacanjeUdomitelja.php").then(response =>
+            response.json()).then(response =>  this.setState({ udomitelji: response }))
     }
 
     componentDidMount = async () => {
@@ -94,8 +94,6 @@ class TablicaZivotinje extends Component {
 
         this.dohvatiZivotinje();
     }
-
-
 
     obrisiZivoinju(sifraZivotinje) {
         if (window.confirm("Želite li obrisati životinju?")) {
@@ -153,6 +151,28 @@ class TablicaZivotinje extends Component {
         }
     };
 
+    udomiZivotinju(sifraUdomiteljaZivotinje) {
+        if (window.confirm("Želite li vratiti životinju?")) {
+            fetch("http://localhost/WPSP_SPJ_KonstrukcijskiZadatak/action/udomiZivotinju.php", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 
+                    sifraUdomljeneZivotinje: this.props.sifraZivotinje,
+                sifraUdomitelja: sifraUdomiteljaZivotinje})
+
+            }).then((result) => {
+                result.json().then((response) => {
+                    alert("Životinja je udomljena!");
+                    this.dohvatiZivotinje();
+                })
+            })
+
+        }
+    };
+
+
     dodajUdomitelja() {
         if (window.confirm("Želite li dodati novog udomitelja?")) {
             fetch('http://localhost/WPSP_SPJ_KonstrukcijskiZadatak/action/dodavanjeUdomitelja.php', {
@@ -181,27 +201,6 @@ class TablicaZivotinje extends Component {
         this.dohvatiUdomitelje();
     }
 
-    udomiZivotinju(sifraOsobe) {
-        if (window.confirm("Želite li udomiti životinju?")) {
-            fetch("http://localhost/WPSP_SPJ_KonstrukcijskiZadatak/action/udomiiZivotinju.php", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    sifraUdomljeneZivotinje: this.props.sifraZivotinje,
-                    sifraUdomiteljaZivotinje: sifraOsobe
-                })
-
-            }).then((result) => {
-                result.json().then((response) => {
-                    alert("Životinja je udomljena!");
-                    this.dohvatiZivotinje();
-                })
-            })
-
-        }
-    };
     trazilica = event => {
         this.setState({ filter: event.target.value });
     };
@@ -270,7 +269,7 @@ class TablicaZivotinje extends Component {
         });
 
         return (
-            <div >
+            <div>
                 <div className="zaglavljeTablice">
                     <input className="trazilicaZivotinja"
                         type="text"
@@ -279,7 +278,7 @@ class TablicaZivotinje extends Component {
                     <AddCircleIcon className="dodaj" onClick={FormaZaDodavanjeZivotinja}>{x ? '<AddCircleIcon/>' : '<AddCircleIcon/>'}</AddCircleIcon>
                 </div>
                 <div>
-                    <Table responsive="sm">
+                    <Table responsive="xl">
                         <thead>
                             <tr>
                                 <th>Šifra</th>
@@ -300,7 +299,7 @@ class TablicaZivotinje extends Component {
                                 <td>{x && (<input placeholder="Starost..." value={this.state.starost} onChange={(data) => { this.setState({ starost: data.target.value }) }}></input>)}</td>
                                 <td>{x && (<input placeholder="Spol..." value={this.state.spol} onChange={(data) => { this.setState({ spol: data.target.value }) }}></input>)}</td>
                                 <td>{x && (<input placeholder="Vrsta..." value={this.state.vrsta} onChange={(data) => { this.setState({ vrsta: data.target.value }) }}></input>)}</td>
-                                <td><th>{x && (<Button className="gumbSirina" size="sm" variant="light" onClick={() => this.dodajZivotinju()}><CheckCircleIcon className="gumb" /></Button>)}{x && (<Button className="gumbSirina" size="sm" variant="light" onClick={FormaZaDodavanjeZivotinja}><CloseIcon className="gumb" /></Button>)}</th></td>
+                                <td><th>{x && (<Button size="sm" variant="light" onClick={() => this.dodajZivotinju()}><CheckCircleIcon className="gumb" /></Button>)}{x && (<Button size="sm" variant="light" onClick={FormaZaDodavanjeZivotinja}><CloseIcon className="gumb" /></Button>)}</th></td>
                             </tr>
                             {/*Forma za ažuriranje životinje*/}
                             <tr className="margina">
@@ -310,7 +309,7 @@ class TablicaZivotinje extends Component {
                                 <td>{y && (<input type='text' name='ime' value={this.state.starostUpdate} onChange={(data) => { this.setState({ starostUpdate: data.target.value }) }}></input>)}</td>
                                 <td>{y && (<input type='text' name='starost' value={this.state.spolUpdate} onChange={(data) => { this.setState({ spolUpdate: data.target.value }) }}></input>)}</td>
                                 <td>{y && (<input type='text' name='vrsta' value={this.state.vrstaUpdate} onChange={(data) => { this.setState({ vrstaUpdate: data.target.value }) }}></input>)}</td>
-                                <td><th>{y && (<Button className="gumbSirina" size="sm" variant="light" onClick={() => this.azurirajZivotinju()}><CheckCircleIcon className="gumb" /></Button>)}{y && (<Button className="gumbSirina" size="sm" variant="light" onClick={FormaZaAzuriranjeZivotinja}><CloseIcon className="gumb" /></Button>)}</th></td>
+                                <td><th>{y && (<Button size="sm" variant="light" onClick={() => this.azurirajZivotinju()}><CheckCircleIcon className="gumb" /></Button>)}{y && (<Button size="sm" variant="light" onClick={FormaZaAzuriranjeZivotinja}><CloseIcon className="gumb" /></Button>)}</th></td>
                             </tr>
                         </thead>
                         <tbody>
@@ -322,7 +321,7 @@ class TablicaZivotinje extends Component {
                                     <td>{zivotinja.starost}</td>
                                     <td>{zivotinja.spol}</td>
                                     <td>{zivotinja.vrsta}</td>
-                                    <td> <> <div> {zivotinja.status ? <Button size="sm" className="gumbSirina" variant="light" onClick={() => this.otvorModalZaUdomljene(zivotinja.sifraZivotinje)}><FavoriteIcon className="status" /></Button> : <Button size="sm" variant="light" onClick={() => this.otvorModalZaUdomljavanje()} >Ud<FavoriteBorderIcon className="status" />mi</Button>}</div>
+                                    <td> <> <div> {zivotinja.status ? <Button size="sm" className="gumbSirina" variant="light" onClick={() => this.otvorModalZaUdomljene(zivotinja.sifraZivotinje)}><FavoriteIcon className="status" /></Button> : <Button className="gumbSirina" size="sm" variant="light" onClick={() => this.otvorModalZaUdomljavanje()} >Ud<FavoriteBorderIcon className="status" />mi</Button>}</div>
                                         {/*Modal prikazuje udomitelja od životinje*/}
                                         <Modal show={this.state.modal} onHide={this.zatvoriModal}>
                                             <Modal.Header zatvoriModal className="zaglavljeTablice">
@@ -360,7 +359,7 @@ class TablicaZivotinje extends Component {
                                             <Modal.Body>
                                                 <div>
                                                     <div>
-                                                        <Table responsive="sm">
+                                                        <Table responsive="xl">
                                                             <thead>
                                                                 <tr>
                                                                     <th>Šifra</th>
@@ -380,7 +379,7 @@ class TablicaZivotinje extends Component {
                                                                     <td><input placeholder="Adresa..." value={this.state.adresa} onChange={(data) => { this.setState({ adresa: data.target.value }) }}></input></td>
                                                                     <td><input placeholder="E-mail..." value={this.state.email} onChange={(data) => { this.setState({ email: data.target.value }) }}></input></td>
                                                                     <td><input placeholder="Tel/Mob..." value={this.state.telMob} onChange={(data) => { this.setState({ telMob: data.target.value }) }}></input></td>
-                                                                    <td><Button size="sm" variant="light" onClick={() => this.dodajUdomitelja()}><AddCircleIcon className="gumb" />Dodaj</Button></td>
+                                                                    <td><Button  className="gumbSirina" size="sm" variant="light" onClick={() => this.dodajUdomitelja()}><AddCircleIcon className="gumb" />Dodaj</Button></td>
                                                                 </tr>
                                                                 {/*this.state.udomitelji*/PretraziPodatkeUdomitelja.map(udomitelj => {
                                                                     return <tr>
@@ -390,7 +389,7 @@ class TablicaZivotinje extends Component {
                                                                         <td>{udomitelj.adresa}</td>
                                                                         <td>{udomitelj.email}</td>
                                                                         <td>{udomitelj.telMob}</td>
-                                                                        <td><Button variant="light" size="sm" onClick={() => this.state.udomiZivotinju(udomitelj.sifraUdomiteljaZivotinje)}> Ud<FavoriteBorderIcon className="gumb" />mi</Button></td>
+                                                                        <td><Button  className="gumbSirina" variant="light" size="sm" onClick={() => this.state.udomiZivotinju(udomitelj.sifraUdomiteljaZivotinje)}> Ud<FavoriteBorderIcon className="gumb" />mi</Button></td>
                                                                     </tr>
                                                                 })}
                                                             </tbody>

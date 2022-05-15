@@ -10,13 +10,11 @@ $sQuery = "SELECT * FROM korisnik";
 $oRecord = $oConnection->query($sQuery);
 $oKorisnici = array();
 while($oRow=$oRecord->fetch(PDO::FETCH_BOTH)){
-    $sifraKorisnika =$oRow['sifraKorisnika'];
     $imeKorisnika = $oRow['imeKorisnika'];
     $prezimeKorisnika = $oRow['prezimeKorisnika'];
     $korisnickoIme = $oRow['korisnickoIme'];
     $lozinka = $oRow['lozinka'];
-    $ponovljenaLozinka = $oRow['ponovljenaLozinka'];
-    $oKorisnik = new Korisnik($sifraKorisnika, $imeKorisnika, $prezimeKorisnika, $korisnickoIme, $lozinka, $ponovljenaLozinka);
+    $oKorisnik = new Korisnik($imeKorisnika, $prezimeKorisnika, $korisnickoIme, $lozinka);
     array_push($oKorisnici, $oKorisnik);
     }
 

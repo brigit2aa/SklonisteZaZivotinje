@@ -1,50 +1,94 @@
-.container-prijava
-{
-    display: flex;
-   
-}
-
-.form-group{
-    position: absolute;
-    top: 55%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    
-}
-
-.dobroDosli
-{
-    text-align: center;
-    display: block;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-    width: 30%;
-    margin-top: 10%;
-    border: 1px solid rgba(255, 255, 255, 0.959);  
-    background-color: rgb(255, 255, 255);
+.container-prijava {
+    border: 1px solid rgba(255, 255, 255, 0.959);
+    background-color: #3A444F;
     box-shadow: 0 0 2px white,
-                0 0 20px rgba(21, 27, 43, 0.842), 
-                0 0 5px rgb(175, 175, 175),
-                0 0 6px rgba(179, 179, 179, 0.932),
-                0 0 35px rgb(185, 185, 185);
+        0 0 20px rgba(21, 27, 43, 0.842),
+        0 0 5px rgb(175, 175, 175),
+        0 0 6px rgba(179, 179, 179, 0.932),
+        0 0 35px rgb(185, 185, 185);
+    width: 30%;
+    height: flex;
+    margin: auto;
+    margin-top: 10%;
 }
 
-.prijava
-{
+.form-group {
+    width: flex;
+    margin: auto;
+    margin-top: 1%;
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.lijevoIme {
+    background-color: #3A444F;
+}
+
+.dobroDosli {
+    width: 60%;
+    height: flex;
+    margin-top: 20%;
+    margin-bottom: 5%;
+}
+
+.prijava {
+    width: 49%;
+    margin-bottom: 30%;
+    background-image: url("../images/gumbi.bmp");
+}
+
+.registracija {
+    margin-bottom: 30%;
+    width: 49%;
+    margin-left: 2%;
+    background-image: url("../images/gumbi.bmp");
+}
+
+.lozinka {
+    margin-left: 50px;
+}
+
+label {
+    margin-right: 5px;
+}
+
+.razmak {
     width: 100%;
-    background-image: url('../images/gumbi.bmp');
+    margin-bottom: 3%;
 }
 
-.lozinka
-{
-    margin-left: 50px; 
+.registracijaInput {
+    margin-top: 3%;
+    margin-left: 7%;
+    margin-bottom: 3%;
 }
 
-.linkPrijava
-{
-    color: rgb(202, 156, 96); 
+.registracijaInput1 {
+    margin-left: 3%;
+    margin-bottom: 3%;
 }
 
-label
-{margin-right: 5px;}
+.registracijaInput2 {
+    margin-left: 7%;
+    margin-bottom: 3%;
+    width: 84%;
+}
+
+.registracijaNaslov {
+    color: rgb(202, 156, 96);
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    transition: .5s;
+    padding: 0.5%;
+    margin-top: 3%;
+    margin-left: 30%;
+    background-image: url('../images/boja.png');
+}
+
+.zaglavljeRegistracije {
+    background-image: url('../images/boja.png');
+}
+
+.modalDolje {
+    margin-top: 10%;
+}

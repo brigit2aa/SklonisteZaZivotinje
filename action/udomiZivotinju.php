@@ -12,7 +12,6 @@ $data = json_decode(file_get_contents("php://input"), true);
 
 $sifraUdomljeneZivotinje = $data['sifraUdomljeneZivotinje'];
 $sifraUdomitelja = $data['sifraUdomiteljaZivotinje'];
-////////////
  
 try
 {
