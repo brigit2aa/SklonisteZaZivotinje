@@ -11,13 +11,13 @@ include_once 'connection.php';
 $data = json_decode(file_get_contents("php://input"), true);
 
 $sifraUdomljeneZivotinje = $data['sifraUdomljeneZivotinje'];
-$sifraUdomitelja = $data['sifraUdomiteljaZivotinje'];
+$sifraUdomiteljaZivotinje = $data['sifraUdomiteljaZivotinje'];
  
 try
 {
   $sQuery = "INSERT INTO udomljenazivotinja (sifraUdomljeneZivotinje, sifraUdomiteljaZivotinje) VALUES (?,?)";
   $oRecord = $oConnection->prepare($sQuery);
-  $oRecord->execute([$sifraUdomljeneZivotinje, $sifraUdomitelja]);
+  $oRecord->execute([$sifraUdomljeneZivotinje, $sifraUdomiteljaZivotinje]);
   echo "Životinja je uspješno udomljena";
 } 
 catch(PDOException $pe)

@@ -10,49 +10,65 @@ class Login extends Component{
   constructor(props){
     super(props);
     this.state = {
+      korisnik: [],
       modal: false,
       imeKorisnika: "",
       prezimeKorisnika: "",
       korisnickoIme: "",
       loznika:""
     };
+    this.onChange = this.onChange.bind(this);
   }
 
   registrirajKorisnika() {
     if (window.confirm("Želite li se registrirati?")) {
-        fetch('http://localhost/WPSP_SPJ_KonstrukcijskiZadatak/action/registracijaKorisnika.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(this.state)
+           
+            fetch('http://localhost/WPSP_SPJ_KonstrukcijskiZadatak/action/registracijaKorisnika.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(this.state)
 
-        })
-        alert('Korisnik ' + this.state.imeKorisnika + ' je uspješno registriran!')
+            })}
+            alert('Korisnik je uspješno dodan!')
 
+            this.setState({
+                imeKorisnika: "",
+                prezimeKorisnika: "",
+                korisnickoIme: "",
+                loznika: "",
+            });
         this.setState({
-          imeKorisnika: "",
-          prezimeKorisnika: "",
-          korisnickoIme: "",
-          loznika:""
+            modal: !this.state.modal,
         });
-    }
-
-    this.setState({
-        modal: !this.state.modal,
-    });
 }
 
 
-  obradaPrijave = (e) => {
-    e.preventDefault();
-    this.props.setLogin(true);
-    alert("Uspješno ste se prijavili!");
+  obradaPrijave = (e ) => {
+    fetch("http://localhost/WPSP_SPJ_KonstrukcijskiZadatak/action/dohvacanjeKorisnika.php", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                   
+                })
+
+            }).then(response => response.json()).then(response => this.setState({korisnik: response}))
+
+   e.preventDefault();
+            this.props.setLogin(true);
+            alert("Uspješno ste se prijavili!");
 }
 
-otvorModal = () => {
-  this.setState({ modal: true });
+onChange(e){
+  this.setState({[e.target.name]: e.target.value});
 }
+
+
+otvoriModal = () => this.setState({ modal: true });
+
 
 zatvoriModal = () => this.setState({ modal: false });
  
@@ -65,12 +81,12 @@ render(){
       <form action="" method="">
         <div className="form-group">
           {/*<input placeholder='Korisničko ime' type="text" className='razmak'/>*/}
-          <InputGroup size="sm" className="mb-3"><FormControl aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder='Korisničko ime' /></InputGroup>
+          <InputGroup size="sm" className="mb-3"><FormControl aria-label="Small" aria-describedby="inputGroup-sizing-sm" name='korisnickoIme' placeholder='Korisničko ime' onChange={this.onChange}/></InputGroup>
           {/*<input placeholder='Lozinka' type="password" className='razmak'/>*/}
-          <InputGroup size="sm" className="mb-3"><FormControl aria-label="Small" aria-describedby="inputGroup-sizing-sm" placeholder='Lozinka' /></InputGroup>
+          <InputGroup size="sm" className="mb-3"><FormControl aria-label="Small" aria-describedby="inputGroup-sizing-sm" name='lozinka' placeholder='Lozinka' onChange={this.onChange}/></InputGroup>
           <Button className="prijava" size="sm" variant="light" onClick={(e) => this.obradaPrijave(e)}>Prijavi se</Button>
           <>
-          <Button className="registracija" size="sm" variant="light" onClick={this.otvorModal}>Registriraj se</Button>
+          <Button className="registracija" size="sm" variant="light" onClick={() =>this.otvoriModal()}>Registriraj se</Button>
 
           <Modal className='modalDolje' show={this.state.modal} onHide={this.zatvoriModal}>
         <Modal.Header zatvoriModal className="zaglavljeRegistracije">
@@ -78,13 +94,12 @@ render(){
           <Modal.Title></Modal.Title>
         </Modal.Header>
         <Modal.Body>
-       
-        <input type="text" placeholder='Ime' className='registracijaInput' value={this.state.imeKorisnika} onChange={(data) => { this.setState({ imeKorisnika: data.target.value }) }}/>
-        <input type="text" placeholder='Prezime' className='registracijaInput1' value={this.state.prezimeKorisnika} onChange={(data) => { this.setState({ prezimeKorisnika: data.target.value }) }}/>
+        <input placeholder='Ime' className='registracijaInput' value={this.state.imeKorisnika} onChange={(data) => { this.setState({ imeKorisnika: data.target.value }) }}/>
+        <input placeholder='Prezime' className='registracijaInput1' value={this.state.prezimeKorisnika} onChange={(data) => { this.setState({ prezimeKorisnika: data.target.value }) }}/>
         <br />
-        <input type="text" placeholder='Korisničko ime' className='registracijaInput2' value={this.state.korisnickoIme} onChange={(data) => { this.setState({ korisnickoIme: data.target.value }) }}/>
+        <input placeholder='Korisničko ime' className='registracijaInput2' value={this.state.korisnickoIme} onChange={(data) => { this.setState({ korisnickoIme: data.target.value }) }}/>
         <br />
-        <input type="text" placeholder='Nova lozinka' className='registracijaInput2' value={this.state.loznika} onChange={(data) => { this.setState({ loznika: data.target.value }) }}/>
+        <input placeholder='Nova lozinka' className='registracijaInput2' value={this.state.loznika} onChange={(data) => { this.setState({ loznika: data.target.value }) }}/>
         </Modal.Body>
         <Modal.Footer>
           <Button size="sm" variant="light" onClick={this.zatvoriModal}><CloseIcon className="gumb"/>Odustani</Button>

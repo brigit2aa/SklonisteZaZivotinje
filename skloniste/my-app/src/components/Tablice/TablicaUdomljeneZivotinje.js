@@ -50,7 +50,7 @@ class TablicaUdomiteljeneZivotinje extends Component {
         const { filter, udomiteljeneZivotinje } = this.state;
 
         var PretraziPodatke = udomiteljeneZivotinje.filter(udomljenaZivotinja => {
-            return udomljenaZivotinja.imeZivotinje.toLowerCase().includes(filter.toLocaleLowerCase()) || udomljenaZivotinja.ime.toLowerCase().includes(filter.toLocaleLowerCase())//Tražilica za  samo po imenu i prezimenu
+            return udomljenaZivotinja.imeZivotinje.toLowerCase().includes(filter.toLocaleLowerCase()) || udomljenaZivotinja.ime.toLowerCase().includes(filter.toLocaleLowerCase()) || udomljenaZivotinja.prezime.toLowerCase().includes(filter.toLocaleLowerCase())//Tražilica za po imenu zivotinje, imenu ili prezimenu udomitelja
 
         });
 
@@ -59,7 +59,7 @@ class TablicaUdomiteljeneZivotinje extends Component {
                 <div className="zaglavljeTablice">
                 <input className="trazilicaUdomljene"
                         type="text"
-                        placeholder="Pretraži udomljene životinje..." /><SearchIcon className="gumb"/>
+                        placeholder="Pretraži udomljene životinje..." value={filter} onChange={this.trazilica}/><SearchIcon className="gumb"/>
                     <p className="naslovUdomljene">Udomljene životinje</p>
                 </div>
                 <div>

@@ -10,6 +10,7 @@ include 'udomitelj.php';
 $sQuery = "SELECT * FROM udomitelj LEFT JOIN udomljenazivotinja ON udomitelj.sifraUdomitelja = udomljenazivotinja.sifraUdomiteljaZivotinje";
 $oRecord = $oConnection->query($sQuery);
 $oUdomitelji = array();
+
 while($oRow=$oRecord->fetch(PDO::FETCH_BOTH)){
     $status;
     if($oRow ["sifraUdomiteljaZivotinje"] != null)
@@ -25,8 +26,22 @@ while($oRow=$oRecord->fetch(PDO::FETCH_BOTH)){
     $adresa = $oRow['adresa'];
     $email = $oRow['email'];
     $telMob = $oRow['telMob'];
-    $oUdomitelj = new Udomitelj($sifraUdomitelja, $ime, $prezime, $adresa, $email, $telMob, $status);
-    array_push($oUdomitelji, $oUdomitelj);
+    $brojac = 0;
+    for($i = 0; $i < count( $oUdomitelji); $i++)
+    {
+
+        if($oUdomitelji[$i]->sifraUdomitelja == $sifraUdomitelja)
+        {
+            $brojac ++;
+        }
+
+    }
+    if($brojac == 0)
+    {
+        $oUdomitelj = new Udomitelj($sifraUdomitelja, $ime, $prezime, $adresa, $email, $telMob, $status);
+        array_push($oUdomitelji, $oUdomitelj);
+    }
+    
     }
     
     echo json_encode($oUdomitelji);

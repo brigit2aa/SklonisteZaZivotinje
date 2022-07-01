@@ -32,3 +32,4 @@ while ($oRow = $oRecord->fetch(PDO::FETCH_BOTH)){
     array_push($oZivotinje, $oZivotinja);
 }
 echo json_encode($oZivotinje);
+?>
