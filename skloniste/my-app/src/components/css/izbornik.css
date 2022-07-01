@@ -1,0 +1,38 @@
+.izbornik {
+    z-index: 1;
+    display: flex;
+    width: 100%;
+    height: 10vh;
+    background-color: #3A444F;
+    box-shadow: 0 0 2px white,
+        0 0 20px rgba(21, 27, 43, 0.842),
+        0 0 5px rgb(175, 175, 175),
+        0 0 6px rgba(179, 179, 179, 0.932),
+        0 0 35px rgb(185, 185, 185);
+}
+
+.logo {
+    margin-left: 10%;
+    margin-right: 8%;
+}
+
+.izbornikLink {
+    text-decoration: none;
+    display: inline-block;
+    color: rgb(27, 36, 61);
+    padding: 2%;
+    font-size: 90%;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    transition: .5s;
+}
+
+.izbornikLink:hover {
+    background-color: #3A444F;
+    color: #DAAA78;
+}
+
+.logo .logoSklonista {
+    width: 100%;
+    height: 100%;
+}

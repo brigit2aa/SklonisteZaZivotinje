@@ -1,0 +1,185 @@
+.tablica {
+    z-index: 1;
+    width: 90%;
+    height: flex;
+    margin-top: 4%;
+    box-shadow: 0 0 1px white,
+        0 0 2px rgb(27, 36, 61);
+    justify-content: center;
+    align-items: center;
+    margin-left: 5%;
+   
+}
+table {
+    color: #3A444F;
+    width: 100%;
+    font-size: 12px;
+    
+}
+
+.naslov {
+    color: #DAAA78;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    transition: .5s;
+    padding: 0.5%;
+    background-color: #3A444F;
+    display: inline-block;
+    margin-left: 22%;
+    margin-right: 41%;
+}
+
+.naslovUdomitelj
+{
+    color: #DAAA78;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    transition: .5s;
+    padding: 0.5%;
+    background-color: #3A444F;
+    display: inline-block;
+    margin-left: 22%;
+    margin-right: 43%;
+}
+.naslovUdomljene
+{
+    color: #DAAA78;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    transition: .5s;
+    padding: 0.5%;
+    background-color: #3A444F;
+    display: inline-block;
+    margin-left: 16%;
+    margin-right: 39%;
+}
+
+th{
+     text-transform: uppercase;
+     letter-spacing: 5px;
+     transition: .5s;
+     font-size: 12px; 
+
+}
+
+.maca{
+    width: 3%;
+    margin-top: 1%;
+    margin-bottom: -4.7%;
+    margin-left: 85%;
+}
+
+.trazilicaUdomitelj
+{
+    width: 20%;
+    color: #3A444F;
+    margin-top: 1.5%;
+    margin-left: 1.5%;
+    font-size: 12px;
+}
+
+.trazilicaUdomljene
+{
+    width: 20%;
+    color: #3A444F;
+    margin-top: 1.5%;
+    margin-left: 1%;
+    font-size: 12px;
+}
+.gumb
+{
+    color: #DAAA78;
+}
+
+.dodaj
+{
+    color: #DAAA78;
+    margin-right: 0.5%;
+}
+
+.trazilicaZivotinja
+{
+    width: 20%;
+    color: #3A444F;
+    margin-top: 1.5%;
+    margin-left: 0.5%;
+    font-size: 12px;
+}
+
+.zaglavljeTablice
+{
+    background-color: #3A444F;
+}
+
+.spremi
+{
+    color: #DAAA78;
+    margin-left: 15px;
+}
+
+.margina
+{
+    border-top: hidden;
+}
+
+.status
+{
+    color: #DAAA78;
+}
+
+.odustani
+{
+    color: #DAAA78;
+    margin-left: 5px;
+}
+
+.zivotinjaKodUdomitelja
+{
+    color: #DAAA78;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    transition: .5s;
+    padding: 0.5%;
+    margin-top: 3%;
+    margin-left: 20%;
+    background-color: #3A444F;
+    
+}
+
+ol{
+    font-size: 12px; 
+    text-align:center;
+    margin-right: 10%;
+}
+
+.bezZivotinje{
+    font-size: 12px; 
+    text-align:center;
+}
+
+.naslovUdomi
+{
+    color: #DAAA78;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    transition: .5s;
+    padding: 0.5%;
+    margin-top: 3%;
+    margin-left: 40%;
+    background-color: #3A444F;
+}
+
+.gumbSirina
+{
+    width: 80px;;
+}
+
+
+.bezZivotinjeText
+{
+    font-size: 12px; 
+    text-align:center;
+    font-weight: bold;
+    color: #3A444F;
+}
+
